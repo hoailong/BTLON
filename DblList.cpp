@@ -1,5 +1,6 @@
 /**
-* Code by Phan Van Hoai IT1 - K58 UTC
+* Code by Phan Van Hoai | Vu Quang Minh | Pham Nhat Nam
+* IT1 - K58 UTC
 */
 #ifndef DBLLIST_CPP
 #define DBLLIST_CPP 1

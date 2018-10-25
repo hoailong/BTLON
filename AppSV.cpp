@@ -1,5 +1,6 @@
 /**
-* Code by Phan Van Hoai IT1 - K58 UTC
+* Code by Phan Van Hoai | Vu Quang Minh | Pham Nhat Nam
+* IT1 - K58 UTC
 */
 #ifndef APSV_CPP
 #define APPSV_CPP 1
@@ -27,6 +28,7 @@ public:
 	void Update();
 	void Find();
 	void DisplayList();	
+	void About();
  };
  
  int AppSV::menu() {
@@ -39,7 +41,8 @@ public:
  	cout << "5.Hien thi danh sach sinh vien hien co trong danh sach." << endl;
  	cout << "6.Chinh sua thong tin sinh vien trong danh sach." << endl;
  	cout << "7.Tim kiem sinh vien theo ho va ten." << endl;
- 	cout << "8.Thoat." << endl;
+ 	cout << "8.Thong tin chuong trinh." << endl;
+ 	cout << "9.Thoat." << endl;
  	cout << "Ban chon ? ";
  	cin >> choice;
  	return choice;
@@ -66,7 +69,9 @@ public:
  				break;
  			case 7:Find();
  				break;
- 			case 8:exit(0);
+ 			case 8:About();
+ 				break;
+ 			case 9:exit(0);
  			default:cout << "\nBan nhap khong dung!";
  				break;
 		 }
@@ -195,6 +200,18 @@ void AppSV::DisplayList() {
 		}
 		cout << endl << setw(79) << "Tong cong:" << setfill('0') << setw(2) << x.size() << setfill(' ') << endl;
 	}
+}
+
+void AppSV::About() {
+	cout << " CHUONG TRINH QUAN LY SINH VIEN SU DUNG LIEN KET KEP" << endl << endl;
+	cout << " Bai tap lon mon: Cau truc du lieu va giai thuat." << endl;
+	cout << " Giao vien huong dan: TS.Hoang Van Thong" << endl;
+	cout << " Nhom thuc hien: 10 - Lop CNTT K58" << endl;
+	cout << " Thanh vien thuc hien: " << endl;
+	cout << "                     Phan Van Hoai" << endl;
+	cout << "                     Pham Nhat Nam" << endl;
+	cout << "                     Vu Quang Minh" << endl;
+	cout << "      --------------------------------------" << endl;
 }
 	
 #endif
