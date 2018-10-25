@@ -29,9 +29,7 @@ public:
  int AppSV::menu() {
  	int choice;
  	cout << "CHUONG TRINH QUAN LY SINH VIEN" << endl << endl;
-// 	cout << "1.Them mot sinh vien vao dau danh sach." << endl;
  	cout << "2.Them mot sinh vien vao cuoi danh sach." << endl;
- 	//cout << "3.Them mot sinh vien vao vi tri bat ky trong danh sach." << endl;
  	cout << "3.Xoa bo mot sinh vien khoi danh sach." << endl;
  	cout << "4.Thay the mot sinh vien moi trong danh sach." << endl;
  	cout << "5.Hien thi danh sach sinh vien." << endl;
@@ -49,8 +47,6 @@ public:
  		int choice = menu();
  		system("cls");
  		switch(choice) {
-// 			case 1:InsertFirst();
-// 				break;
  			case 2:InsertLast();
  				break;
  			case 3:Remove();
@@ -68,45 +64,37 @@ public:
 		getch();
 	 }
  }
- 
-//void AppSV::InsertFirst() {
-// 	SinhVien sv;
-//	cout << "THEM MOT SINH VIEN DAU DANH SACH" << endl;
-// 	cout << "Nhap thong tin sinh vien: " << endl;
-// 	sv.setInfo();
-// 	x.insertFirst(sv);
-// 	cout << "Them sinh vien \"" << sv.getHoTen() << "\" thanh cong!" << endl;
-// }
+
 void AppSV::InsertLast() {
 	SinhVien sv;
 	cout << "THEM MOT SINH VIEN CUOI DANH SACH" << endl;
  	cout << "Nhap thong tin sinh vien: " << endl;
  	sv.setInfo();
- 	x.insertLast(sv);
- 	cout << "Them sinh vien \"" << sv.getHoTen() << "\" thanh cong!" << endl;
+ 	if (x.insertLast(sv)) {
+	 	cout << "Them sinh vien \"" << sv.getHoTen() << "\" thanh cong!" << endl;
+	}
+	else {
+		cout << "Them sinh vien \"" << sv.getHoTen() << "\" khong thanh cong!" << endl; 
+	}
 }
 void AppSV::Remove() {
 	cout << "XOA BO SINH VIEN" << endl;
 	if (x.isEmpty()) cout << "Danh sach sinh vien hien dang rong!" << endl;
 	else {
-		string masvDel;
-		string hoTenDel;
-		bool deleted = false;
-		cout << "Nhap ma sinh vien can xoa: ";
-		cin.ignore();
-		getline(cin,masvDel);
-		int i = 1;
-		while (i <= x.size()) {
-			string masv = x.getNode(i)->getElem().getMaSv();
-			if (masv.compare(masvDel) == 0) {
-				hoTenDel = x.getNode(i)->getElem().getHoTen();
-				x.remove(x.getNode(i));
-				deleted = true;
-			}
-			else i++;
+		int sttDel;
+		cout << "Nhap vi tri tri sinh vien can xoa: ";
+		cin >> sttDel;
+		Node<SinhVien> *p;
+		p = x.getNode(sttDel);
+		if (p != NULL) {
+			string masvDel = p->getElem().getMaSv();
+			string hoTenDel = p->getElem().getHoTen();	
+			x.remove(p);
+			cout << "\nDa xoa thanh cong sinh vien \"" << hoTenDel << " - " << masvDel << "\" !" << endl;
 		}
-		if (deleted) cout << "Xoa sinh vien ma sinh vien \"" << masvDel << " - " << hoTenDel << "\" thanh cong!" << endl;
-		else cout << "Khong thanh cong ! Ma sinh vien \"" << masvDel << "\" khong ton tai!" << endl;
+		else {
+			cout << "\nXoa khong thanh cong!";
+		}
 	}
 }
 void AppSV::Replace() {

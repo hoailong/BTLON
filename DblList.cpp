@@ -9,7 +9,8 @@ template<class T>
 class DblList {
 private:
 	Node<T> *header;
-	Node<T> *trailer;
+	Node<T> *tailer;
+	int n;
 public:
 	DblList();
 	int size();
@@ -17,7 +18,6 @@ public:
 	
 	Node<T> *getFirst();
 	Node<T> *getNode(int x);
-//	Node<T> *insertFirst(SinhVien elem);
 	Node<T> *insertLast(T elem);
 	void remove(Node<T> *n);
 	void replace(Node<T> *p, T elem);
@@ -25,25 +25,19 @@ public:
 
 template<class T>
 DblList<T>::DblList() {
-	header = trailer = NULL;
+	header = NULL;
+	tailer = NULL;
+	n = 0;
 }
 
 template<class T>
 int DblList<T>::size() {
-	if (header == NULL) return 0;
-	int s = 1;
-	Node<T> *n = header;
-	while (n->getNext() != NULL) {
-		s++;
-		n = n->getNext();
-	}
-	return s;
+	return n;
 }
 
 template<class T>
 int DblList<T>::isEmpty() {
-	if (header == NULL) return 1;
-	return 0;
+	return n==0;
 }
 
 template<class T>
@@ -53,64 +47,60 @@ Node<T> *DblList<T>::getFirst() {
 
 template<class T>
 Node<T>* DblList<T>::getNode(int x) {
+	if (x < 1 || x > size() || isEmpty()) return NULL;
 	if (x == 1) return header;
-	if (x == size()) return trailer;
+	if (x == size()) return tailer;
 	Node<T> *p = new Node<T>();
 	p = header;
-	int j = 1;
-	while (j < x) {
+	int index = 1;
+	while (index < x) {
 		p = p->getNext();
-		j++;
+		index++;
 	}
 	return p;
 }
 
-//Node<T>* DblList<T>::insertFirst(T elem) {
-//	Node<T> *n = new Node<T>();
-//	n->setT(elem);
-//	if (header == NULL) {
-//		header = trailer = n;
-//	}
-//	else {
-//		header->setPrev(n);
-//		n->setNext(header);
-//		header = n;
-//	}
-//	return n;
-//}
-
 template<class T>
 Node<T>* DblList<T>::insertLast(T elem) {
-	Node<T> *n = new Node<T>();
-	n->setElem(elem);
-	if (trailer == NULL) {
-		header = trailer = n;
+	Node<T> *p = new Node<T>();
+	p->setElem(elem);
+	if (isEmpty()) {
+		header = p;
+		tailer = p;
 	}
 	else {
-		trailer->setNext(n);
-		n->setPrev(trailer);
-		trailer = n;
+		tailer->setNext(p);
+		p->setPrev(tailer);
+		tailer = p;
 	}
-	return n;
+	n++;
+	return p;
 }
 
 template<class T>
-void DblList<T>::remove(Node<T> *n) {
-	if (n == header) {
-		header = header->getNext();
-		header->setPrev(NULL);
+void DblList<T>::remove(Node<T> *p) {
+	if (size() == 1) {
+		header = NULL;
+		tailer = NULL;
 	}
 	else {
-		if (n == trailer) {
-			trailer = trailer->getPrev();
-			trailer->setNext(NULL);
+		if (p == header) {
+			header = header->getNext();
+			header->setPrev(NULL);
 		}
 		else {
-			n->getPrev()->setNext(n->getNext());
-			n->getNext()->setPrev(n->getPrev());
+			if (p == tailer) {
+				tailer = tailer->getPrev();
+				tailer->setNext(NULL);
+			}
+			else {
+				p->getPrev()->setNext(p->getNext());
+				p->getNext()->setPrev(p->getPrev());
+			}
 		}
 	}
-	delete n;
+	n--;
+	delete p;
 }
 
 template<class T>
