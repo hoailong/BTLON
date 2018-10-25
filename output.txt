@@ -1,0 +1,6 @@
+	Ma sv          Ho ten                Gioi      Lop       Ngay sinh
+
+	171203470      Phan Van Hoai         Nam       CNTT1     12/09/1999
+	171201234      Pham Nhat Nam         Nam       CK1       06/09/1998
+	171206996      Vu Quang Minh         Nu        KT2       19/06/2000
+	171205468      DO NHAT QUANG         NAM       CNTT3     10/10/1999

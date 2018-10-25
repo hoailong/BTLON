@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <conio.h>
+#include <fstream>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ private:
 public:
 	int menu();
 	void run();
+	void ReadFile();
+	void WriteFile();
 	void InsertFirst();
 	void InsertLast();
 	void Remove();
@@ -29,12 +32,14 @@ public:
  int AppSV::menu() {
  	int choice;
  	cout << "CHUONG TRINH QUAN LY SINH VIEN" << endl << endl;
- 	cout << "2.Them mot sinh vien vao cuoi danh sach." << endl;
- 	cout << "3.Xoa bo mot sinh vien khoi danh sach." << endl;
- 	cout << "4.Chinh sua thong tin sinh vien trong danh sach." << endl;
- 	cout << "5.Hien thi danh sach sinh vien." << endl;
- 	cout << "7.Tim kiem sinh vien theo ten." << endl;
- 	cout << "6.Thoat." << endl;
+ 	cout << "1.Doc danh sach sinh vien tu file vao danh sach." << endl;
+ 	cout << "2.Ghi danh sach sinh vien vao file." << endl;
+ 	cout << "3.Them mot sinh vien vao cuoi danh sach." << endl;
+ 	cout << "4.Xoa bo mot sinh vien khoi danh sach." << endl;
+ 	cout << "5.Hien thi danh sach sinh vien hien co trong danh sach." << endl;
+ 	cout << "6.Chinh sua thong tin sinh vien trong danh sach." << endl;
+ 	cout << "7.Tim kiem sinh vien theo ho va ten." << endl;
+ 	cout << "8.Thoat." << endl;
  	cout << "Ban chon ? ";
  	cin >> choice;
  	return choice;
@@ -47,23 +52,54 @@ public:
  		int choice = menu();
  		system("cls");
  		switch(choice) {
- 			case 2:InsertLast();
+ 			case 1:ReadFile();
  				break;
- 			case 3:Remove();
+ 			case 2:WriteFile();
  				break;
- 			case 4:Update();
+ 			case 3:InsertLast();
+ 				break;
+ 			case 4:Remove();
  				break;
  			case 5:DisplayList();
  				break;
+ 			case 6:Update();
+ 				break;
  			case 7:Find();
  				break;
- 			case 6:exit(0);
+ 			case 8:exit(0);
  			default:cout << "\nBan nhap khong dung!";
  				break;
 		 }
 		getch();
 	 }
  }
+
+void AppSV::ReadFile() {
+	ifstream ifs("input.txt",ios::in);
+	if (ifs.fail()) {
+		cout << "\nFile khong ton tai !";
+	}
+	else {
+		SinhVien sv;
+		while (!ifs.eof()) {
+			sv.readInfor(ifs);
+			x.insertLast(sv);
+		}
+		cout << "Doc file thanh cong!";
+	}
+	ifs.close();
+}
+
+void AppSV::WriteFile() {
+	ofstream ofs("output.txt",ios::out);
+	ofs << "\t" << left << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;			
+	DblItr<SinhVien> itr(x);
+	while (itr.hasNext()) {
+		itr.next().writeInfor(ofs);
+	}
+	cout << "Ghi file thanh cong!";
+	ofs.close();
+}
 
 void AppSV::InsertLast() {
 	SinhVien sv;
@@ -110,8 +146,8 @@ void AppSV::Update() {
 		if (p != NULL) {
 			SinhVien sv;
 			cout << "\nThong tin sinh vien hien tai: " << endl;
-			cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
-			p->getElem().displayInfo();
+			cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
+			p->getElem().displayInfo(1);
 			cout << "\nNhap thong tin chinh sua: " << endl;
 			sv.setInfo();
 			x.replace(p,sv);
@@ -133,16 +169,16 @@ void AppSV::Find() {
 		cin.ignore();
 	 	cout << "Nhap ho ten sinh vien can tim: ";
 	 	getline(cin,hoTen);
-	 	cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
+	 	cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
 	 	DblItr<SinhVien> itr(x);
-		while (itr.hasNext()) {
+	 	while (itr.hasNext()) {
 			sv = itr.next();
 			if (hoTen.compare(sv.getHoTen()) == 0) {
-				sv.displayInfo();
 				dem++;
+				sv.displayInfo(dem);
 			}
 		}
-		cout << "\nTong cong: " << dem; 
+		cout << endl << setw(79) << "Tong cong:" << setfill('0') << setw(2) << x.size() << setfill(' ') << endl; 
 	}
 }
 
@@ -150,12 +186,14 @@ void AppSV::DisplayList() {
 	if (x.isEmpty()) cout << "Danh sach SV hien dang trong!" << endl;
 	else {
 		cout << "DANH SACH SINH VIEN : " << endl << endl;
-		cout << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
+		cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
 		DblItr<SinhVien> itr(x);
+		int stt = 0;
 		while (itr.hasNext()) {
-			itr.next().displayInfo();
+			stt++;
+			itr.next().displayInfo(stt);
 		}
-		cout << endl << setw(95) << "Tong cong:" << x.size() << endl;
+		cout << endl << setw(79) << "Tong cong:" << setfill('0') << setw(2) << x.size() << setfill(' ') << endl;
 	}
 }
 	

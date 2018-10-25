@@ -7,6 +7,7 @@
 #include<string>
 #include<iostream>
 #include<iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -96,37 +97,48 @@ public:
 	}
 	
 	void setInfo() {
-		string s;
-		int x;
+		int d,m,y;
+		char ch;
 		cin.ignore();
 		cout << "Ma sinh vien: ";
-		getline(cin,s);
-		setMaSv(s);
+		getline(cin,maSv);
 		cout << "Ho ten: ";
-		getline(cin,s);
-		setHoTen(s);
-		cout << "Ngay sinh:" << endl;
-		cout << "\tNgay: ";
-		cin >> x;
-		ngaySinh.setNgay(x);
-		cout << "\tThang: ";
-		cin >> x;
-		ngaySinh.setThang(x);
-		cout << "\tNam: ";
-		cin >> x;
-		ngaySinh.setNam(x);
-		cin.ignore();
+		getline(cin,hoTen);
 		cout << "Gioi tinh: ";
-		getline(cin,s);
-		setGioiTinh(s);
+		getline(cin,gioiTinh);
 		cout << "Lop: ";
-		getline(cin,s);
-		setLop(s);	
+		getline(cin,lop);cout << "Ngay sinh (dd/mm/yyyy):";
+		cin >> d >> ch >> m >> ch >> y;
+		ngaySinh.setNgay(d);
+		ngaySinh.setThang(m);
+		ngaySinh.setNam(y);
+		
 	}
 	
-	void displayInfo() {
-		cout << setw(15) << getMaSv() << setw(30) << getHoTen() << "\t\t" << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam() << setw(15) << getGioiTinh() << setw(15) << getLop() << endl;
+	void displayInfo(int stt) {
+		cout << "\t" << left << setw(6) << stt << setw(15) << getMaSv() << setw(22) << getHoTen() << setw(10) << getGioiTinh() << setw(10) << getLop() 
+	    << right << setfill('0') << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam()  << setfill(' ') << endl;
 		
+	}
+	
+	void readInfor(ifstream &ifs) {
+		int d,m,y;
+		char ch;
+		string s = "";
+		getline(ifs,maSv);
+		getline(ifs,hoTen);
+		ifs >> d >> ch >> m >> ch >> y;
+		ngaySinh.setNgay(d);
+		ngaySinh.setThang(m);
+		ngaySinh.setNam(y);
+		getline(ifs,s);
+		getline(ifs,gioiTinh);
+		getline(ifs,lop);
+	}
+	
+	void writeInfor(ofstream &ofs) {
+		ofs << "\t" << left << setw(15) << getMaSv() << setw(22) << getHoTen() << setw(10) << getGioiTinh() << setw(10) << getLop() 
+	    << right << setfill('0') << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam()  << setfill(' ') << endl;
 	}
 };
 
