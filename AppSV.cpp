@@ -21,7 +21,7 @@ public:
 	void InsertFirst();
 	void InsertLast();
 	void Remove();
-	void Replace();
+	void Update();
 	void Find();
 	void DisplayList();	
  };
@@ -31,7 +31,7 @@ public:
  	cout << "CHUONG TRINH QUAN LY SINH VIEN" << endl << endl;
  	cout << "2.Them mot sinh vien vao cuoi danh sach." << endl;
  	cout << "3.Xoa bo mot sinh vien khoi danh sach." << endl;
- 	cout << "4.Thay the mot sinh vien moi trong danh sach." << endl;
+ 	cout << "4.Chinh sua thong tin sinh vien trong danh sach." << endl;
  	cout << "5.Hien thi danh sach sinh vien." << endl;
  	cout << "7.Tim kiem sinh vien theo ten." << endl;
  	cout << "6.Thoat." << endl;
@@ -51,7 +51,7 @@ public:
  				break;
  			case 3:Remove();
  				break;
- 			case 4:Replace();
+ 			case 4:Update();
  				break;
  			case 5:DisplayList();
  				break;
@@ -97,43 +97,53 @@ void AppSV::Remove() {
 		}
 	}
 }
-void AppSV::Replace() {
-	SinhVien sv;
-	int i;
-	cout << "THAY THE MOT SINH VIEN TRONG DANH SACH" << endl;
- 	cout << "Nhap thong tin sinh vien: " << endl;
- 	sv.setInfo();
- 	cout << "Vi tri sinh vien can thay the ( > 0 va < "<< x.size()+1 << " ): ";
-		cin >> i;
-	if (i < 1 || i > x.size()) {
-		cout << "Thay the sinh vien khong thanh con ! Loi vi tri !" << endl;
+void AppSV::Update() {
+	cout << "SUA DOI THONG TIN SINH VIEN TRONG DANH SACH" << endl;
+	if (x.isEmpty()) cout << "Danh sach SV hien dang trong!" << endl;
+	else {
+		SinhVien sv;
+		int sttUp;
+		cout << "Nhap vi tri tri sinh vien can xoa: ";
+		cin >> sttUp;
+		Node<SinhVien> *p;
+		p = x.getNode(sttUp);
+		if (p != NULL) {
+			SinhVien sv;
+			cout << "\nThong tin sinh vien hien tai: " << endl;
+			cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
+			p->getElem().displayInfo();
+			cout << "\nNhap thong tin chinh sua: " << endl;
+			sv.setInfo();
+			x.replace(p,sv);
+			cout << "\nChinh sua thong tin sinh vien thanh cong!";
+		}
+	 	else {
+	 		cout << "\nChinh sua thong tin sinh vien khong thanh cong!";
+		 }
 	}
- 	else {
- 		string hoTenBefore = x.getNode(i)->getElem().getHoTen();
- 		x.replace(x.getNode(i),sv);
- 		string hoTenAfter = x.getNode(i)->getElem().getHoTen();
- 		cout << "Thay the sinh vien \"" << hoTenBefore << "\" bang sinh vien \"" << hoTenAfter << "\" thanh cong!" << endl;
-	 }
 }
 
 void AppSV::Find() {
-	string hoTen ="";
-	int dem = 0;
-	SinhVien sv;
-	cout << "TIM KIEM SINH VIEN TRONG DANH SACH" << endl;
-	cin.ignore();
- 	cout << "Nhap ho ten sinh vien can tim: ";
- 	getline(cin,hoTen);
- 	cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
- 	DblItr<SinhVien> itr(x);
-	while (itr.hasNext()) {
-		sv = itr.next();
-		if (hoTen.compare(sv.getHoTen()) == 0) {
-			sv.displayInfo();
-			dem++;
+	if (x.isEmpty()) cout << "Danh sach SV hien dang trong!" << endl;
+	else {
+		string hoTen ="";
+		int dem = 0;
+		SinhVien sv;
+		cout << "TIM KIEM SINH VIEN TRONG DANH SACH" << endl;
+		cin.ignore();
+	 	cout << "Nhap ho ten sinh vien can tim: ";
+	 	getline(cin,hoTen);
+	 	cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
+	 	DblItr<SinhVien> itr(x);
+		while (itr.hasNext()) {
+			sv = itr.next();
+			if (hoTen.compare(sv.getHoTen()) == 0) {
+				sv.displayInfo();
+				dem++;
+			}
 		}
+		cout << "\nTong cong: " << dem; 
 	}
-	cout << "\nTong cong: " << dem; 
 }
 
 void AppSV::DisplayList() {
