@@ -21,6 +21,7 @@ public:
 	void InsertLast();
 	void Remove();
 	void Replace();
+	void Find();
 	void DisplayList();	
  };
  
@@ -33,6 +34,7 @@ public:
  	cout << "3.Xoa bo mot sinh vien khoi danh sach." << endl;
  	cout << "4.Thay the mot sinh vien moi trong danh sach." << endl;
  	cout << "5.Hien thi danh sach sinh vien." << endl;
+ 	cout << "7.Tim kiem sinh vien theo ten." << endl;
  	cout << "6.Thoat." << endl;
  	cout << "Ban chon ? ";
  	cin >> choice;
@@ -55,6 +57,8 @@ public:
  			case 4:Replace();
  				break;
  			case 5:DisplayList();
+ 				break;
+ 			case 7:Find();
  				break;
  			case 6:exit(0);
  			default:cout << "\nBan nhap khong dung!";
@@ -122,6 +126,27 @@ void AppSV::Replace() {
  		cout << "Thay the sinh vien \"" << hoTenBefore << "\" bang sinh vien \"" << hoTenAfter << "\" thanh cong!" << endl;
 	 }
 }
+
+void AppSV::Find() {
+	string hoTen ="";
+	int dem = 0;
+	SinhVien sv;
+	cout << "TIM KIEM SINH VIEN TRONG DANH SACH" << endl;
+	cin.ignore();
+ 	cout << "Nhap ho ten sinh vien can tim: ";
+ 	getline(cin,hoTen);
+ 	cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
+ 	DblItr itr(x);
+	while (itr.hasNext()) {
+		sv = itr.next();
+		if (hoTen.compare(sv.getHoTen()) == 0) {
+			sv.displayInfo();
+			dem++;
+		}
+	}
+	cout << "\nTong cong: " << dem; 
+}
+
 void AppSV::DisplayList() {
 	if (x.isEmpty()) cout << "Danh sach SV hien dang trong!" << endl;
 	else {
