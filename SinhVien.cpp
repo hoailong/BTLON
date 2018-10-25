@@ -59,13 +59,13 @@ private:
 	string hoTen;
 	Date ngaySinh;
 	string gioiTinh;
-	string queQuan;
+	string lop;
 public:
 	SinhVien():ngaySinh() {
 		this->maSv = "000000000";
 		this->hoTen = "NULL";
 		this->gioiTinh = "XXX";
-		this->queQuan = "NULL";
+		this->lop = "NULL";
 	}
 	void setMaSv(string maSv) {
 		this->maSv = maSv;
@@ -88,11 +88,11 @@ public:
 		return gioiTinh;
 	}
 	
-	void setQueQuan(string queQuan) {
-		this->queQuan = queQuan;
+	void setLop(string lop) {
+		this->lop = lop;
 	}
-	string getQueQuan() {
-		return queQuan;
+	string getLop() {
+		return lop;
 	}
 	
 	void setInfo() {
@@ -119,13 +119,13 @@ public:
 		cout << "Gioi tinh: ";
 		getline(cin,s);
 		setGioiTinh(s);
-		cout << "Que quan: ";
+		cout << "Lop: ";
 		getline(cin,s);
-		setQueQuan(s);	
+		setLop(s);	
 	}
 	
 	void displayInfo() {
-		cout << setw(15) << getMaSv() << setw(30) << getHoTen() << "\t\t" << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam() << setw(15) << getGioiTinh() << setw(15) << getQueQuan() << endl;
+		cout << setw(15) << getMaSv() << setw(30) << getHoTen() << "\t\t" << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam() << setw(15) << getGioiTinh() << setw(15) << getLop() << endl;
 		
 	}
 };

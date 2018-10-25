@@ -126,7 +126,7 @@ void AppSV::DisplayList() {
 	if (x.isEmpty()) cout << "Danh sach SV hien dang trong!" << endl;
 	else {
 		cout << "DANH SACH SINH VIEN : " << endl << endl;
-		cout << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "QUE QUAN" << endl << endl;
+		cout << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
 		DblItr itr(x);
 		while (itr.hasNext()) {
 			itr.next().displayInfo();
