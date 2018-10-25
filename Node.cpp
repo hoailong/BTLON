@@ -3,11 +3,14 @@
 */
 #ifndef NODE_CPP
 #define NODE_CPP 0
-#include "SinhVien.cpp"
+#include<iostream>
 
+using namespace std;
+
+template<class T>
 class Node {
 private:
-	SinhVien sv;
+	T elem;
 	Node *next;
 	Node *prev;
 public:
@@ -15,11 +18,11 @@ public:
 		this->next = NULL;
 		this->prev = NULL;
 	}
-	void setSinhVien(SinhVien sv) {
-		this->sv = sv;
+	void setElem(T elem) {
+		this->elem = elem;
 	}
-	SinhVien getSinhVien() {
-		return sv;
+	T getElem() {
+		return elem;
 	}
 	void setNext(Node *n) {
 		this->next = n;

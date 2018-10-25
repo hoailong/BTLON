@@ -5,30 +5,34 @@
 #define DBLITR_CPP 1
 #include "DblList.cpp" 
 
+template<class T>
 class DblItr {
 private:
-	DblList dbl;
+	DblList<T> dbl;
 	int index;
 public:
-	DblItr(DblList &d);
+	DblItr(DblList<T> &d);
 	int hasNext();
-	SinhVien next();
+	T next();
 };
 
-DblItr::DblItr(DblList &d) {
+template<class T>
+DblItr<T>::DblItr(DblList<T> &d) {
 	this->dbl = d;
 	this->index = 1;
 }
 
-int DblItr::hasNext() {
+template<class T>
+int DblItr<T>::hasNext() {
 	if (index <= dbl.size()) return 1;
 	return 0;
 }
 
-SinhVien DblItr::next() {
-	Node *n = dbl.getNode(index);
+template<class T>
+T DblItr<T>::next() {
+	Node<T> *n = dbl.getNode(index);
 	index++;
-	return n->getSinhVien();
+	return n->getElem();
 }
 
 #endif

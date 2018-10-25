@@ -5,6 +5,7 @@
 #define APPSV_CPP 1
 #include "DblList.cpp"
 #include "DblItr.cpp"
+#include "SinhVien.cpp"
 #include <iostream>
 #include <stdlib.h>
 #include <conio.h>
@@ -13,7 +14,7 @@ using namespace std;
 
 class AppSV {
 private:
-	DblList x;
+	DblList<SinhVien> x;
 public:
 	int menu();
 	void run();
@@ -28,7 +29,7 @@ public:
  int AppSV::menu() {
  	int choice;
  	cout << "CHUONG TRINH QUAN LY SINH VIEN" << endl << endl;
- 	cout << "1.Them mot sinh vien vao dau danh sach." << endl;
+// 	cout << "1.Them mot sinh vien vao dau danh sach." << endl;
  	cout << "2.Them mot sinh vien vao cuoi danh sach." << endl;
  	//cout << "3.Them mot sinh vien vao vi tri bat ky trong danh sach." << endl;
  	cout << "3.Xoa bo mot sinh vien khoi danh sach." << endl;
@@ -48,8 +49,8 @@ public:
  		int choice = menu();
  		system("cls");
  		switch(choice) {
- 			case 1:InsertFirst();
- 				break;
+// 			case 1:InsertFirst();
+// 				break;
  			case 2:InsertLast();
  				break;
  			case 3:Remove();
@@ -68,14 +69,14 @@ public:
 	 }
  }
  
-void AppSV::InsertFirst() {
- 	SinhVien sv;
-	cout << "THEM MOT SINH VIEN DAU DANH SACH" << endl;
- 	cout << "Nhap thong tin sinh vien: " << endl;
- 	sv.setInfo();
- 	x.insertFirst(sv);
- 	cout << "Them sinh vien \"" << sv.getHoTen() << "\" thanh cong!" << endl;
- }
+//void AppSV::InsertFirst() {
+// 	SinhVien sv;
+//	cout << "THEM MOT SINH VIEN DAU DANH SACH" << endl;
+// 	cout << "Nhap thong tin sinh vien: " << endl;
+// 	sv.setInfo();
+// 	x.insertFirst(sv);
+// 	cout << "Them sinh vien \"" << sv.getHoTen() << "\" thanh cong!" << endl;
+// }
 void AppSV::InsertLast() {
 	SinhVien sv;
 	cout << "THEM MOT SINH VIEN CUOI DANH SACH" << endl;
@@ -96,9 +97,9 @@ void AppSV::Remove() {
 		getline(cin,masvDel);
 		int i = 1;
 		while (i <= x.size()) {
-			string masv = x.getNode(i)->getSinhVien().getMaSv();
+			string masv = x.getNode(i)->getElem().getMaSv();
 			if (masv.compare(masvDel) == 0) {
-				hoTenDel = x.getNode(i)->getSinhVien().getHoTen();
+				hoTenDel = x.getNode(i)->getElem().getHoTen();
 				x.remove(x.getNode(i));
 				deleted = true;
 			}
@@ -120,9 +121,9 @@ void AppSV::Replace() {
 		cout << "Thay the sinh vien khong thanh con ! Loi vi tri !" << endl;
 	}
  	else {
- 		string hoTenBefore = x.getNode(i)->getSinhVien().getHoTen();
+ 		string hoTenBefore = x.getNode(i)->getElem().getHoTen();
  		x.replace(x.getNode(i),sv);
- 		string hoTenAfter = x.getNode(i)->getSinhVien().getHoTen();
+ 		string hoTenAfter = x.getNode(i)->getElem().getHoTen();
  		cout << "Thay the sinh vien \"" << hoTenBefore << "\" bang sinh vien \"" << hoTenAfter << "\" thanh cong!" << endl;
 	 }
 }
@@ -136,7 +137,7 @@ void AppSV::Find() {
  	cout << "Nhap ho ten sinh vien can tim: ";
  	getline(cin,hoTen);
  	cout << endl << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
- 	DblItr itr(x);
+ 	DblItr<SinhVien> itr(x);
 	while (itr.hasNext()) {
 		sv = itr.next();
 		if (hoTen.compare(sv.getHoTen()) == 0) {
@@ -152,7 +153,7 @@ void AppSV::DisplayList() {
 	else {
 		cout << "DANH SACH SINH VIEN : " << endl << endl;
 		cout << setw(15) << "MA SINH VIEN" << setw(30) << "HO TEN" << "\t\t NGAY SINH" << setw(15) << "GIOI TINH" << setw(15) << "LOP" << endl << endl;
-		DblItr itr(x);
+		DblItr<SinhVien> itr(x);
 		while (itr.hasNext()) {
 			itr.next().displayInfo();
 		}
