@@ -17,7 +17,7 @@ using namespace std;
 
 class AppSV {
 private:
-	DblList<SinhVien> x;
+	DblList<Student> x;
 	DoHoa graph;
 public:
 	int menu();
@@ -86,15 +86,21 @@ public:
 
 void AppSV::ReadFile() {
 	cout << "\tDOC DANH SACH SINH VIEN TU FILE VAO DANH SACH" << endl << endl;
-	ifstream ifs("input.txt",ios::in);
+	char file[20];
+	cout<<"Nhap ten file can doc: ";
+	cin>>file;
+	ifstream ifs(file ,ios::in);
 	if (ifs.fail()) {
 		cout << "\tFile khong ton tai !";
+	}else if(ifs.tellg() == 0){           //if the file is empty that mean its length = 0;
+		cout<<"File nay rong nen khong doc ^^, doc lai file khac";
+		return;
 	}
 	else {
-		SinhVien sv;
+		Student student;
 		while (!ifs.eof()) {
-			sv.readInfor(ifs);
-			x.insertLast(sv);
+			student.readInfor(ifs);
+			x.insertLast(student);
 		}
 		cout << "\tDoc file thanh cong!";
 	}
@@ -102,41 +108,41 @@ void AppSV::ReadFile() {
 }
 
 void AppSV::WriteFile() {
-	cout << "\tGHI DANH SACH SINH VINE VAO FILE" << endl << endl;
+	cout << "\tGHI DANH SACH SINH VIEN VAO FILE" << endl << endl;
 	ofstream ofs("output.txt",ios::out);
 	ofs << "\t" << left << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;			
-	DblItr<SinhVien> itr(x);
+	DblItr<Student> itr(x);
 	while (itr.hasNext()) {
-		itr.next().writeInfor(ofs);
+		itr.getNext().writeInfor(ofs);
 	}
 	cout << "\tGhi file thanh cong!";
 	ofs.close();
 }
 
 void AppSV::InsertLast() {
-	SinhVien sv;
+	Student sv;
 	cout << "\tTHEM MOT SINH VIEN CUOI DANH SACH" << endl << endl;
  	cout << "\tNhap thong tin sinh vien: " << endl;
  	sv.setInfo();
  	if (x.insertLast(sv)) {
-	 	cout << "\tThem sinh vien \"" << sv.getHoTen() << "\" thanh cong!" << endl;
+	 	cout << "\tThem sinh vien \"" << sv.getName() << "\" thanh cong!" << endl;
 	}
 	else {
-		cout << "\tThem sinh vien \"" << sv.getHoTen() << "\" khong thanh cong!" << endl; 
+		cout << "\tThem sinh vien \"" << sv.getName() << "\" khong thanh cong!" << endl; 
 	}
 }
 void AppSV::Remove() {
 	cout << "\tXOA BO SINH VIEN" << endl << endl;
 	if (x.isEmpty()) cout << "\tDanh sach sinh vien hien dang rong!" << endl;
 	else {
-		int sttDel;
+		int delIndex;
 		cout << "\tNhap vi tri tri sinh vien can xoa: ";
-		cin >> sttDel;
-		Node<SinhVien> *p;
-		p = x.getNode(sttDel);
+		cin >> delIndex;
+		Node<Student> *p;
+		p = x.getNode(delIndex);
 		if (p != NULL) {
-			string masvDel = p->getElem().getMaSv();
-			string hoTenDel = p->getElem().getHoTen();	
+			string masvDel = p->getElem().getIdentificationNumber();
+			string hoTenDel = p->getElem().getName()	;
 			x.remove(p);
 			cout << "\n\tDa xoa thanh cong sinh vien \"" << hoTenDel << " - " << masvDel << "\" !" << endl;
 		}
@@ -149,14 +155,14 @@ void AppSV::Update() {
 	cout << "\tSUA DOI THONG TIN SINH VIEN TRONG DANH SACH" << endl << endl;
 	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" << endl;
 	else {
-		SinhVien sv;
-		int sttUp;
+		Student sv;
+		int updateIndex;
 		cout << "\tNhap vi tri tri sinh vien can sua thong tin: ";
-		cin >> sttUp;
-		Node<SinhVien> *p;
-		p = x.getNode(sttUp);
+		cin >> updateIndex;
+		Node<Student> *p;
+		p = x.getNode(updateIndex);
 		if (p != NULL) {
-			SinhVien sv;
+			Student sv;
 			cout << "\n\tThong tin sinh vien hien tai: " << endl;
 			cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
 			p->getElem().displayInfo(1);
@@ -175,22 +181,22 @@ void AppSV::Find() {
 	cout << "\tTIM KIEM SINH VIEN TRONG DANH SACH" << endl << endl;
 	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" << endl;
 	else {
-		string hoTen ="";
-		int dem = 0;
-		SinhVien sv;
+		string nameFind ="";
+		int count = 0;
+		Student student;
 		cin.ignore();
 	 	cout << "\tNhap ho ten sinh vien can tim: ";
-	 	getline(cin,hoTen);
+	 	getline(cin, nameFind);
 	 	cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
-	 	DblItr<SinhVien> itr(x);
+	 	DblItr<Student> itr(x);
 	 	while (itr.hasNext()) {
-			sv = itr.next();
-			if (hoTen.compare(sv.getHoTen()) == 0) {
-				dem++;
-				sv.displayInfo(dem);
+			student = itr.getNext();
+			if (nameFind.compare(student.getName()) == 0) {
+				count++;
+				student.displayInfo(count);
 			}
 		}
-		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << dem << setfill(' ') << endl; 
+		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << count << setfill(' ') << endl; 
 	}
 }
 
@@ -199,11 +205,11 @@ void AppSV::DisplayList() {
 	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" << endl;
 	else {
 		cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
-		DblItr<SinhVien> itr(x);
+		DblItr<Student> itr(x);
 		int stt = 0;
 		while (itr.hasNext()) {
 			stt++;
-			itr.next().displayInfo(stt);
+			itr.getNext().displayInfo(stt);
 		}
 		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << x.size() << setfill(' ') << endl; 
 	}
