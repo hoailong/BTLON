@@ -9,137 +9,155 @@
 #include<iostream>
 #include<iomanip>
 #include <fstream>
-
+#include <time.h>
+#include<algorithm>
+#include<cctype>
 using namespace std;
+
+time_t theTime = time(NULL);
+struct tm *aTime = localtime(&theTime);
+int currentYear = aTime->tm_year + 1900;
+
+void capitalizeFirstLetter(string &str)
+{
+	bool check;
+	check=false;		
+	for(int i=0;i<str.length();i++)
+	{
+		if(check==false && (str.at(i)>='a' && str.at(i)<='z')  )
+			str.at(i)=str.at(i)+'A'-'a';  // -32 trong bang ma ascii
+			check = true;                
+		if(str.at(i) != ' ')           // neu khong phai khoang cach thi check = true
+			check=true;									
+		else							//khong thi false
+			check = false;
+	}
+}
+
 
 class Date {
 private:
-	int ngay;
-	int thang;
-	int nam;
+	int birthDay;
+	int birthMonth;
+	int birthYear;
 public:
 	Date() {
-		this->ngay = 1;
-		this->thang = 1;
-		this->nam = 1900;
+		this->birthDay = 1;
+		this->birthMonth = 1;
+		this->birthYear = 1900;
 	}
-	void setNgay(int ngay){
-		if ((ngay >=1) && (ngay <= 31))
-			this->ngay = ngay;	
-		else 
-			this->ngay = 1;
+	void setBirthDay(int day){
+		this->birthDay = birthDay;	
 	}
-	int getNgay() {
-		return ngay;
+	int getBirthDay() {
+		return birthDay;
 	}
-	void setThang(int thang){
-		if ((thang >=1 ) && (thang <= 12))
-			this->thang = thang;	
-		else 
-			this->thang = 1;
+	void setBirthMonth(int birthMonth){
+		this->birthMonth = birthMonth;
 	}
-	int getThang() {
-		return thang;
+	int getBirthMonth() {
+		return birthMonth;
 	}
-	void setNam(int nam){
-		if (nam <= 2018)
-			this->nam = nam;	
-		else 
-			this->nam = 1900;
+	void setBirthYear(int birthYear){
+		this->birthYear = birthYear;	
 	}
-	int getNam() {
-		return nam;
+	int getBirthYear() {
+		return birthYear;
 	}
-	
-	
 };
 
 
-class SinhVien {
+class Student {
 private:
-	string maSv;
-	string hoTen;
-	Date ngaySinh;
-	string gioiTinh;
-	string lop;
+	string identificationNumber;  //masinhvien
+	string name;
+	Date birthDay;
+	string sex;
+	string studentClass;
 public:
-	SinhVien():ngaySinh() {
-		this->maSv = "000000000";
-		this->hoTen = "NULL";
-		this->gioiTinh = "XXX";
-		this->lop = "NULL";
+	Student():birthDay() {
+		this->identificationNumber = "000000000";
+		this->name = "NULL";
+		this->sex = "XXX";
+		this->studentClass = "NULL";
 	}
-	void setMaSv(string maSv) {
-		this->maSv = maSv;
+	void setIdentificationNumber(string number) {
+		this->identificationNumber = number;
 	}
-	string getMaSv() {
-		return maSv;
-	}
-	
-	void setHoTen(string hoTen) {
-		this->hoTen = hoTen;
-	}
-	string getHoTen() {
-		return hoTen;
+	string getIdentificationNumber() {
+		return identificationNumber;
 	}
 	
-	void setGioiTinh(string gioiTinh) {
-		this->gioiTinh = gioiTinh;
+	void setName(string name) {
+		capitalizeFirstLetter(name);
+		this->name = name;
 	}
-	string getGioiTinh() {
-		return gioiTinh;
+	string getName() {
+		capitalizeFirstLetter(name);
+		return name;
 	}
 	
-	void setLop(string lop) {
-		this->lop = lop;
+	void setSex(string sex) {
+		this->sex = sex;
 	}
-	string getLop() {
-		return lop;
+	string getSex() {
+		return sex;
+	}
+	
+	void setStudentClass(string studentClass) {
+		this->studentClass = studentClass;
+	}
+	string getStudentClass() {
+		return studentClass;
 	}
 	
 	void setInfo() {
-		int d,m,y;
-		char ch;
+		int day, month, year;
 		cin.ignore();
 		cout << "\tMa sinh vien: ";
-		getline(cin,maSv);
+		getline(cin,identificationNumber);
 		cout << "\tHo ten: ";
-		getline(cin,hoTen);
+		getline(cin, name);
 		cout << "\tGioi tinh: ";
-		getline(cin,gioiTinh);
+		getline(cin, sex);
 		cout << "\tLop: ";
-		getline(cin,lop);cout << "\tNgay sinh (dd/mm/yyyy):";
-		cin >> d >> ch >> m >> ch >> y;
-		ngaySinh.setNgay(d);
-		ngaySinh.setThang(m);
-		ngaySinh.setNam(y);
-		
+		getline(cin, studentClass);
+		cout<<"Nhap ngay sinh:"<<endl;
+		cout<<"\tNgay:";
+		cin>>day;
+		birthDay.setBirthDay(day);
+		cout<<"\tThang: ";
+		cin>>month;
+		birthDay.setBirthMonth(month);
+		cout<<"\tNam:";
+		cin>>year;
+		birthDay.setBirthYear(year);
 	}
 	
 	void displayInfo(int stt) {
-		cout << "\t" << left << setw(6) << stt << setw(15) << getMaSv() << setw(22) << getHoTen() << setw(10) << getGioiTinh() << setw(10) << getLop() 
-	    << right << setfill('0') << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam()  << setfill(' ') << endl;
+		cout << "\t" << left << setw(6) << stt << setw(15) << getIdentificationNumber() << setw(22) << getName() << setw(10) << getSex() << setw(10) << getStudentClass() 
+	    << right << setfill('0') << setw(2) << birthDay.getBirthDay() << "/" << setw(2) << birthDay.getBirthMonth() << "/" << setw(4) << birthDay.getBirthYear()  << setfill(' ') << endl;
 		
 	}
 	
 	void readInfor(ifstream &ifs) {
-		int d,m,y;
+		int day , month , year;
 		char ch;
 		string s = "";
-		getline(ifs,maSv);
-		getline(ifs,hoTen);
-		ifs >> d >> ch >> m >> ch >> y;
-		ngaySinh.setNgay(d);
-		ngaySinh.setThang(m);
-		ngaySinh.setNam(y);
+		getline(ifs,identificationNumber);
+		getline(ifs, name);
+		ifs >> day >> ch >> month >> ch >> year;
+		birthDay.setBirthDay(day);
+		birthDay.setBirthMonth(month);
+		birthDay.setBirthYear(year);
 		getline(ifs,s);
-		getline(ifs,gioiTinh);
-		getline(ifs,lop);
+		getline(ifs, sex);
+		getline(ifs, studentClass);
 	}
 	
 	void writeInfor(ofstream &ofs) {
-		ofs << "\t" << left << setw(15) << getMaSv() << setw(22) << getHoTen() << setw(10) << getGioiTinh() << setw(10) << getLop() 
-	    << right << setfill('0') << setw(2) << ngaySinh.getNgay() << "/" << setw(2) << ngaySinh.getThang() << "/" << setw(4) << ngaySinh.getNam()  << setfill(' ') << endl;
+		ofs << "\t" << left << setw(15) << getIdentificationNumber() << setw(22) << getName() << setw(10) << getSex() << setw(10) << getStudentClass() 
+	    << right << setfill('0') << setw(2) << birthDay.getBirthDay() << "/" << setw(2) << birthDay.getBirthMonth() << "/" << setw(4) << birthDay.getBirthYear()  << setfill(' ') << endl;
 	}
 };
 
