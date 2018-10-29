@@ -77,7 +77,7 @@ public:
  			case 8:About();
  				break;
  			case 9:exit(0);
- 			default:cout << "\nBan nhap khong dung!";
+ 			default:cout << "\n\n\tBan nhap khong dung!";
  				break;
 		 }
 		getch();
@@ -87,13 +87,13 @@ public:
 void AppSV::ReadFile() {
 	cout << "\tDOC DANH SACH SINH VIEN TU FILE VAO DANH SACH" << endl << endl;
 	char file[20];
-	cout<<"Nhap ten file can doc: ";
+	cout<<"\tNhap ten file can doc: ";
 	cin>>file;
 	ifstream ifs(file ,ios::in);
 	if (ifs.fail()) {
 		cout << "\tFile khong ton tai !";
 	}else if(ifs.tellg() == 0){           //if the file is empty that mean its length = 0;
-		cout<<"File nay rong nen khong doc ^^, doc lai file khac";
+		cout<<"\tFile nay rong nen khong doc ^^, doc lai file khac";
 		return;
 	}
 	else {
@@ -125,15 +125,15 @@ void AppSV::InsertLast() {
  	cout << "\tNhap thong tin sinh vien: " << endl;
  	sv.setInfo();
  	if (x.insertLast(sv)) {
-	 	cout << "\tThem sinh vien \"" << sv.getName() << "\" thanh cong!" << endl;
+	 	cout << "\tThem sinh vien \"" << sv.getName() << "\" thanh cong!" ;
 	}
 	else {
-		cout << "\tThem sinh vien \"" << sv.getName() << "\" khong thanh cong!" << endl; 
+		cout << "\tThem sinh vien \"" << sv.getName() << "\" khong thanh cong!" ; 
 	}
 }
 void AppSV::Remove() {
 	cout << "\tXOA BO SINH VIEN" << endl << endl;
-	if (x.isEmpty()) cout << "\tDanh sach sinh vien hien dang rong!" << endl;
+	if (x.isEmpty()) cout << "\tDanh sach sinh vien hien dang rong!";
 	else {
 		int delIndex;
 		cout << "\tNhap vi tri tri sinh vien can xoa: ";
@@ -153,7 +153,7 @@ void AppSV::Remove() {
 }
 void AppSV::Update() {
 	cout << "\tSUA DOI THONG TIN SINH VIEN TRONG DANH SACH" << endl << endl;
-	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" << endl;
+	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!";
 	else {
 		Student sv;
 		int updateIndex;
@@ -179,7 +179,7 @@ void AppSV::Update() {
 
 void AppSV::Find() {
 	cout << "\tTIM KIEM SINH VIEN TRONG DANH SACH" << endl << endl;
-	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" << endl;
+	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" ;
 	else {
 		string nameFind ="";
 		int count = 0;
@@ -196,13 +196,13 @@ void AppSV::Find() {
 				student.displayInfo(count);
 			}
 		}
-		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << count << setfill(' ') << endl; 
+		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << count << setfill(' ') ; 
 	}
 }
 
 void AppSV::DisplayList() {
 	cout << "\tDANH SACH SINH VIEN" << endl << endl;		
-	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!" << endl;
+	if (x.isEmpty()) cout << "\tDanh sach SV hien dang trong!";
 	else {
 		cout << "\t" << left << setw(6) << "Stt" << setw(15) << "Ma sv" << setw(22) << "Ho ten" << setw(10) << "Gioi" << setw(10) << "Lop"  << "Ngay sinh" << endl << endl;
 		DblItr<Student> itr(x);
@@ -211,7 +211,7 @@ void AppSV::DisplayList() {
 			stt++;
 			itr.getNext().displayInfo(stt);
 		}
-		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << x.size() << setfill(' ') << endl; 
+		cout << right << "\n\t" << setw(71) << "Tong cong:" << setfill('0') << setw(2) << x.size() << setfill(' ') ; 
 	}
 }
 
@@ -225,7 +225,7 @@ void AppSV::About() {
 	cout << "\t                    Phan Van Hoai" << endl;
 	cout << "\t                    Pham Nhat Nam" << endl;
 	cout << "\t                    Vu Quang Minh" << endl;
-	cout << "\t     --------------------------------------" << endl;
+	cout << "\t     --------------------------------------" ;
 }
 	
 #endif

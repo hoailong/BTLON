@@ -28,30 +28,30 @@ class DoHoa {
 	
 	void veKhung() {
 		char c = 201;
-		gotoxy(0,0);cout << c;  //ve goc trai tren
+		gotoxy(1,0);cout << c;  //ve goc trai tren
 		c = 200;
-		gotoxy(0,18);cout << c; //ve goc trai duoi
+		gotoxy(1,18);cout << c; //ve goc trai duoi
 		c = 187;
 		gotoxy(92,0);cout << c; //ve goc phai tren
 		c = 188;
 		gotoxy(92,18);cout << c; //ve goc phai duoi
 		c = 205;
-		for (int i = 1; i <= 91; i++) { // ve ngang tren
+		for (int i = 2; i <= 91; i++) { // ve ngang tren
 			gotoxy(i,0);
 			cout << c;
 		}
-		for (int i = 1; i <= 91; i++) { // ve ngang duoi
+		for (int i = 2; i <= 91; i++) { // ve ngang duoi
 			gotoxy(i,18);
 			cout << c;
 		}
-		for (int i = 1; i <= 91; i++) { // ve ngang giua
+		for (int i = 2; i <= 91; i++) { // ve ngang giua
 			gotoxy(i,2);
 			cout << c;
 		}
 		
 		c = 186;
 		for (int i = 1; i <= 17; i++) { // ve doc trai
-			gotoxy(0,i);
+			gotoxy(1,i);
 			cout << c;
 		}
 		for (int i = 1; i <= 17; i++) { // ve doc phai
@@ -59,7 +59,7 @@ class DoHoa {
 			cout << c;
 		}
 		c = 204;
-		gotoxy(0,2);cout << c; //ve goc cat trai
+		gotoxy(1,2);cout << c; //ve goc cat trai
 		c = 185;
 		gotoxy(92,2);cout << c; //ve goc cat phai
 		c = 219;

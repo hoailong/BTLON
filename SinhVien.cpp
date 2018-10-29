@@ -9,31 +9,8 @@
 #include<iostream>
 #include<iomanip>
 #include <fstream>
-#include <time.h>
-#include<algorithm>
-#include<cctype>
+
 using namespace std;
-
-time_t theTime = time(NULL);
-struct tm *aTime = localtime(&theTime);
-int currentYear = aTime->tm_year + 1900;
-
-void capitalizeFirstLetter(string &str)
-{
-	bool check;
-	check=false;		
-	for(int i=0;i<str.length();i++)
-	{
-		if(check==false && (str.at(i)>='a' && str.at(i)<='z')  )
-			str.at(i)=str.at(i)+'A'-'a';  // -32 trong bang ma ascii
-			check = true;                
-		if(str.at(i) != ' ')           // neu khong phai khoang cach thi check = true
-			check=true;									
-		else							//khong thi false
-			check = false;
-	}
-}
-
 
 class Date {
 private:
@@ -81,6 +58,37 @@ public:
 		this->sex = "XXX";
 		this->studentClass = "NULL";
 	}
+	void capitalizeFirstLetter(string &str)  /// Chuan hoa ho ten 
+	{
+		bool check;
+		check=false;		
+		for(int i=0;i<str.length();i++)
+		{
+			if(!check) {
+				if (str.at(i)>='a' && str.at(i)<='z') {
+					str.at(i)=str.at(i)-32;  // -32 trong bang ma ascii
+				} 
+			}
+			else {
+				if (str.at(i)>='A' && str.at(i)<='Z') {
+					str.at(i)=str.at(i)+32;  // +32 trong bang ma ascii
+				} 
+			}
+			check = true;                
+			if(str.at(i) != ' ')           // neu khong phai khoang cach thi check = true
+				check=true;									
+			else							//khong thi false
+				check = false;
+		}
+	}
+	
+	void capitalizeLetter(string &str) {	//Chuyen thanh chuoi viet hoa
+		for(int i=0;i<str.length();i++) {			
+			if (str.at(i)>='a' && str.at(i)<='z') {
+				str.at(i)=str.at(i)-32;
+			} 
+		}
+	}
 	void setIdentificationNumber(string number) {
 		this->identificationNumber = number;
 	}
@@ -98,16 +106,20 @@ public:
 	}
 	
 	void setSex(string sex) {
+		capitalizeFirstLetter(sex);
 		this->sex = sex;
 	}
 	string getSex() {
+		capitalizeFirstLetter(sex);
 		return sex;
 	}
 	
 	void setStudentClass(string studentClass) {
+		capitalizeLetter(studentClass);
 		this->studentClass = studentClass;
 	}
 	string getStudentClass() {
+		capitalizeLetter(studentClass);
 		return studentClass;
 	}
 	
@@ -122,14 +134,14 @@ public:
 		getline(cin, sex);
 		cout << "\tLop: ";
 		getline(cin, studentClass);
-		cout<<"Nhap ngay sinh:"<<endl;
-		cout<<"\tNgay:";
+		cout<<"\tNgay sinh:"<< endl;
+		cout<<"\t\tNgay:";
 		cin>>day;
 		birthDay.setBirthDay(day);
-		cout<<"\tThang: ";
+		cout<<"\t\tThang: ";
 		cin>>month;
 		birthDay.setBirthMonth(month);
-		cout<<"\tNam:";
+		cout<<"\t\tNam:";
 		cin>>year;
 		birthDay.setBirthYear(year);
 	}
