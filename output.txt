@@ -1,2 +1,3 @@
 	Ma sv          Ho ten                Gioi      Lop       Ngay sinh
 
+	171203470      Phan Van Hoai         Nam       CNTT1     01/09/1999

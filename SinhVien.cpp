@@ -23,20 +23,29 @@ public:
 		this->birthMonth = 1;
 		this->birthYear = 1900;
 	}
-	void setBirthDay(int day){
-		this->birthDay = birthDay;	
+	void setBirthDay(int birthDay){
+		if ((birthDay >=1) && (birthDay <= 31))			
+			this->birthDay = birthDay;
+		else 	
+			this->birthDay = 1;	
 	}
 	int getBirthDay() {
 		return birthDay;
 	}
 	void setBirthMonth(int birthMonth){
-		this->birthMonth = birthMonth;
+		if ((birthMonth >=1 ) && (birthMonth <= 12))			
+			this->birthMonth = birthMonth;
+		else 	
+			this->birthMonth = 1;
 	}
 	int getBirthMonth() {
 		return birthMonth;
 	}
 	void setBirthYear(int birthYear){
-		this->birthYear = birthYear;	
+		if (birthYear <= 2018)			
+			this->birthYear = birthYear;
+		else 	
+			this->birthYear = 1900;	
 	}
 	int getBirthYear() {
 		return birthYear;
@@ -125,6 +134,7 @@ public:
 	
 	void setInfo() {
 		int day, month, year;
+		char ch;
 		cin.ignore();
 		cout << "\tMa sinh vien: ";
 		getline(cin,identificationNumber);
@@ -134,15 +144,10 @@ public:
 		getline(cin, sex);
 		cout << "\tLop: ";
 		getline(cin, studentClass);
-		cout<<"\tNgay sinh:"<< endl;
-		cout<<"\t\tNgay:";
-		cin>>day;
+		cout<<"\tNgay sinh (dd/mm/yyyy): ";
+		cin >> day >> ch >> month >> ch >> year;
 		birthDay.setBirthDay(day);
-		cout<<"\t\tThang: ";
-		cin>>month;
 		birthDay.setBirthMonth(month);
-		cout<<"\t\tNam:";
-		cin>>year;
 		birthDay.setBirthYear(year);
 	}
 	
