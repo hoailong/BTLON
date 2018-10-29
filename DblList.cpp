@@ -15,9 +15,10 @@ private:
 public:
 	DblList();
 	int size();
-	int isEmpty();
+	bool isEmpty();
 	
 	Node<T> *getFirst();
+	Node<T> *getLast();
 	Node<T> *getNode(int x);
 	Node<T> *insertLast(T elem);
 	void remove(Node<T> *n);
@@ -37,7 +38,7 @@ int DblList<T>::size() {
 }
 
 template<class T>
-int DblList<T>::isEmpty() {
+bool DblList<T>::isEmpty() {
 	return n==0;
 }
 
@@ -47,8 +48,14 @@ Node<T> *DblList<T>::getFirst() {
 }
 
 template<class T>
+Node<T> *DblList<T>::getLast() {
+	return tailer;
+}
+
+template<class T>
 Node<T>* DblList<T>::getNode(int x) {
-	if (x < 1 || x > size() || isEmpty()) return NULL;
+	if (x < 1 || x > size() || isEmpty()) 
+	return NULL;
 	if (x == 1) return header;
 	if (x == size()) return tailer;
 	Node<T> *p = new Node<T>();
@@ -96,7 +103,7 @@ void DblList<T>::remove(Node<T> *p) {
 			}
 			else {
 				p->getPrev()->setNext(p->getNext());
-				p->getNext()->setPrev(p->getPrev());
+				p->getNext()->setPrev(p->getPrev());                                                                                      
 			}
 		}
 	}

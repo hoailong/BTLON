@@ -9,30 +9,31 @@
 template<class T>
 class DblItr {
 private:
-	DblList<T> dbl;
-	int index;
+	DblList<T> doubleLinkedList; 
+	int currentIndex;
 public:
 	DblItr(DblList<T> &d);
 	int hasNext();
-	T next();
+	T getNext();
 };
 
 template<class T>
 DblItr<T>::DblItr(DblList<T> &d) {
-	this->dbl = d;
-	this->index = 1;
+	this->doubleLinkedList = d;
+	this->currentIndex = 1;
 }
 
 template<class T>
 int DblItr<T>::hasNext() {
-	if (index <= dbl.size()) return 1;
+	if (currentIndex <= doubleLinkedList.size())
+	return 1;
 	return 0;
 }
 
 template<class T>
-T DblItr<T>::next() {
-	Node<T> *n = dbl.getNode(index);
-	index++;
+T DblItr<T>::getNext() {
+	Node<T> *n = doubleLinkedList.getNode(currentIndex);
+	currentIndex++;
 	return n->getElem();
 }
 
