@@ -92,11 +92,7 @@ void AppSV::ReadFile() {
 	ifstream ifs(file ,ios::in);
 	if (ifs.fail()) {
 		cout << "\tFile khong ton tai !";
-	}else if(ifs.tellg() == 0){           //if the file is empty that mean its length = 0;
-		cout<<"\tFile nay rong nen khong doc ^^, doc lai file khac";
-		return;
-	}
-	else {
+	}else {
 		Student student;
 		while (!ifs.eof()) {
 			student.readInfor(ifs);

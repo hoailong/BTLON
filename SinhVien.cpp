@@ -47,7 +47,7 @@ public:
 		return birthMonth;
 	}
 	int setBirthYear(int birthYear){
-		if (birthYear < year)			
+		if (birthYear > year)			
 			return 0;
 		else 	
 			this->birthYear = birthYear;	
@@ -166,7 +166,7 @@ public:
 		
 	}
 	
-	void readInfor(ifstream &ifs) {
+	int readInfor(ifstream &ifs) {
 		int day , month , year;
 		char ch;
 		string s = "";
