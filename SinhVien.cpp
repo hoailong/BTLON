@@ -9,6 +9,11 @@
 #include<iostream>
 #include<iomanip>
 #include <fstream>
+#include <time.h>
+
+time_t theTime = time(NULL);
+struct tm *aTime = localtime(&theTime);
+int year = aTime->tm_year + 1900;
 
 using namespace std;
 
@@ -23,29 +28,29 @@ public:
 		this->birthMonth = 1;
 		this->birthYear = 1900;
 	}
-	void setBirthDay(int birthDay){
-		if ((birthDay >=1) && (birthDay <= 31))			
-			this->birthDay = birthDay;
+	int setBirthDay(int birthDay){
+		if ((birthDay < 1) || (birthDay > 31))			
+			return 0;
 		else 	
-			this->birthDay = 1;	
+			this->birthDay = birthDay;
 	}
 	int getBirthDay() {
 		return birthDay;
 	}
-	void setBirthMonth(int birthMonth){
-		if ((birthMonth >=1 ) && (birthMonth <= 12))			
-			this->birthMonth = birthMonth;
+	int setBirthMonth(int birthMonth){
+		if ((birthMonth <1 ) || (birthMonth > 12))			
+			return 0;
 		else 	
-			this->birthMonth = 1;
+			this->birthMonth = birthMonth;
 	}
 	int getBirthMonth() {
 		return birthMonth;
 	}
-	void setBirthYear(int birthYear){
-		if (birthYear <= 2018)			
-			this->birthYear = birthYear;
+	int setBirthYear(int birthYear){
+		if (birthYear < year)			
+			return 0;
 		else 	
-			this->birthYear = 1900;	
+			this->birthYear = birthYear;	
 	}
 	int getBirthYear() {
 		return birthYear;
@@ -146,9 +151,13 @@ public:
 		getline(cin, studentClass);
 		cout<<"\tNgay sinh (dd/mm/yyyy): ";
 		cin >> day >> ch >> month >> ch >> year;
-		birthDay.setBirthDay(day);
-		birthDay.setBirthMonth(month);
-		birthDay.setBirthYear(year);
+		while(birthDay.setBirthDay(day) == 0 || birthDay.setBirthMonth(month) == 0 || birthDay.setBirthYear(year) == 0){
+			if(birthDay.setBirthDay(day) == 0 || birthDay.setBirthMonth(month) == 0 || birthDay.setBirthYear(year) == 0){
+				cout<<"\tNhap ngay thang nam khong hop le xin moi nhap lai."<<endl;
+			}
+			cout<<"\tNgay sinh (dd/mm/yyyy): ";
+			cin >> day >> ch >> month >> ch >> year;
+		}
 	}
 	
 	void displayInfo(int stt) {
